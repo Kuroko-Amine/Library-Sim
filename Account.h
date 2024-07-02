@@ -98,7 +98,7 @@ return -1 ;
 
 int ExistAD(pswrd x){
     pswrd y ;
-    FILE *ptr=fopen("C:\\Users\\Aminos\\Desktop\\lib\\DataAD.bin","rb");
+    FILE *ptr=fopen("DataAD.bin","rb");
     if(ptr==NULL){
         printf("error opening data file \n");
         exit(1);
