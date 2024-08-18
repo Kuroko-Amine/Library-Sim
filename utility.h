@@ -31,7 +31,6 @@ int bookID ;
 char author[30];
 float price ;
 int quant ;
-int stock ;
 int year ;
 char genre[40];
 
