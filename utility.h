@@ -54,7 +54,7 @@ typedef struct{
 
 pswrd acccount;
 stdprofile profile;
-book booklist[10];
+stubook booklist[10];
 int pret ;
 
 }student;
