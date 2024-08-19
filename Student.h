@@ -11,6 +11,9 @@ int isLeapYear(int year);
 int getDaysInMonth(int month, int year);
 date addWeeksToDate(date d, int weeks);
 void updateSTD(student etu);
+void verifybooks(student etu) ;
+int ended(student etu);
+
 
 
 
@@ -23,8 +26,6 @@ date getCurrentDate() {
     current_date.y = tm->tm_year + 1900;
     return current_date;
 }
-
-
 
 
 int isLeapYear(int year) {
@@ -62,8 +63,6 @@ date addWeeksToDate(date d, int weeks) {
 
     return d;
 }
-
-
 
 
 void updateSTD(student etu){
@@ -132,6 +131,7 @@ void searchLiv(char name[30],student etu){
             if(etu.pret>10){
                 printf("Sorry you have already borrowed 10 books\n");
             }else{
+                if(ended(etu)){
                 if(x.quant>0){
                     printf("Book borrowed successfully\n");
                     x.quant=x.quant-1 ;
@@ -146,9 +146,50 @@ void searchLiv(char name[30],student etu){
             }else{
                 printf("Sorry this book is not available\n");
             }
-
+            }else{printf("You need to return one of your books; you have exceeded the due date u can't borrow a book\n");
+            }
             }
         }
 }
 }
 
+int ended(student etu){
+    int i;
+    date Today =getCurrentDate() ;
+    for(i=0;i<10;i++){
+     if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y){
+            return 0;
+    }
+}
+return 1 ;
+}
+
+
+void verifybooks(student etu){
+     date Today =getCurrentDate() ;
+     int choix;
+    int i;
+    for(i=0;i<10;i++){
+        if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y){
+            printf("The due date for the book %s has passed !\n",etu.booklist[i].title);
+            printf("Do you want to :\n 1)return the book\n2)extend the due date by 3 weeks\n");
+            do{
+                scanf("%d",&choix);
+                if(choix<1 || choix>2){
+                    printf("wrong choice , choose 1 or 2\n");
+                }
+            }while(choix<1 || choix>2);
+            if(choix==2){
+                etu.booklist[i].endate=addWeeksToDate(etu.booklist[i].endate,3);
+                
+            }else{
+                for(int k=i ; k<10;k++){
+                    etu.booklist[k]=etu.booklist[k+1];
+                    etu.pret-- ;
+                }
+            }
+            updateSTD(etu);
+    }
+
+}
+}
