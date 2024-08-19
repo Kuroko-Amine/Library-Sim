@@ -230,6 +230,18 @@ void creatAccountSTD(){
     printf("enter your faculty \n");
     gets(y.profile.faculty);
     y.pret=0 ;
+   for(int k=0 ; k<10 ; k++){
+        y.booklist[k].bookID=0000;
+        y.booklist[k].startdate.d=00;
+        y.booklist[k].startdate.y=0000;
+        y.booklist[k].startdate.m=00;
+        y.booklist[k].endate.d=00;
+        y.booklist[k].endate.y=0000;
+        y.booklist[k].endate.m=00;
+        y.booklist[k].stdID=0000;
+        strcpy(y.booklist[k].title,"Empty");
+        strcpy(y.booklist[k].author,"Empty");
+    }
     printf("Account created Succefuly ! \n");
     fwrite(&y,sizeof(student),1,ptr);
     fclose(ptr);
