@@ -37,7 +37,7 @@ void update ( int bookid ){
         if( a.bookID == bookid ){
             found = 1;
             do{
-            printf("What do you want to update?\n 1) Quantity\n 2) Price\n 3) Stock \n");
+            printf("What do you want to update?\n 1) Quantity\n 2) Price\n");
             scanf("%d",&choice);
             switch(choice){
                 case 1:
@@ -48,15 +48,11 @@ void update ( int bookid ){
                 printf("Enter the new price: ");
                 scanf("%f",&a.price);
                 break;
-                case 3:
-                printf("Enter the new stock: ");
-                scanf("%d",&a.stock);
-                break;
                 default:
                 printf("Invalid choice! Try again\n");
                 break;
             }
-            }while( choice < 1 || choice > 3 );
+            }while( choice < 1 || choice > 2 );
             fwrite( &a, sizeof(book), 1, f2);
         }
         else{
@@ -114,7 +110,7 @@ void search ( int bookid ){
     printf("The book doesn't exist.\n");
     fclose(f);
 }}
-void Displaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaybooks(){
+void Displaybooks(){
     FILE *f = fopen("booksInfo", "rb");
     book a; int i = 1;
     if (f == NULL) {
@@ -175,9 +171,7 @@ void Addabook(){
     printf("Enter the book's price\n");
     scanf("%f",&a.price);
     printf("Enter the book's quantity\n");
-    scanf("%d",&a.quant);
-    printf("Enter the book's stock\n");
-    scanf("%d",&a.stock);  
+    scanf("%d",&a.quant); 
     printf("Enter the book's publishing year\n");
     scanf("%d",&a.year);
     f= fopen("booksInfo", "ab");
@@ -367,8 +361,12 @@ void borrowedBooks(){
             printf("Full Name");
             gotoxy(60,0);
             printf("Book Titles");
+            gotoxy(100,0);
+            printf("Borrow Date");
+            gotoxy(120,0);
+            printf("Due Date");
             gotoxy(0,1);
-            printf("------------------------------------------------------------------------");
+            printf("-------------------------------------------------------------------------------------------------------------------------------------------");
             FILE *f = fopen("Students","rb");
             if ( f == NULL ){
                 printf("Error opening file!\n");
@@ -383,12 +381,16 @@ void borrowedBooks(){
                     gotoxy(60,i);
                     for ( int j=0; j<(a.pret); j++ ){
                         printf("%s\n",a.booklist[j].title);
+                        gotoxy(100,i);
+                        printf("%d.%d.%d",a.booklist[j].startdate.d, a.booklist[j].startdate.m, a.booklist[j].startdate.y);
+                        gotoxy(120,i);
+                        printf("%d.%d.%d",a.booklist[j].endate.d, a.booklist[j].endate.m, a.booklist[j].endate.y);
                         i++;
                         gotoxy(60,i);
                     }
                     i++;
                     gotoxy(0,i);
-                    printf("------------------------------------------------------------------------");
+                    printf("-------------------------------------------------------------------------------------------------------------------------------------------");
                     i++;
                 }fclose(f);
             }
@@ -412,7 +414,7 @@ void borrowedBooks(){
                         gotoxy(60,0);
                         printf("Book Titles");
                         gotoxy(0,1);
-                        printf("------------------------------------------------------------------------");
+                        printf("-------------------------------------------------------------------------------------------------------------------------------------------");
                         gotoxy(0,2);
                         printf("%d",a.profile.ID);
                         gotoxy(20,2);
@@ -421,6 +423,10 @@ void borrowedBooks(){
                         int i = 2;
                         for ( int j=0; j<(a.pret); j++ ){
                         printf("%s\n",a.booklist[j].title);
+                        gotoxy(100,i);
+                        printf("%d.%d.%d",a.booklist[j].startdate.d, a.booklist[j].startdate.m, a.booklist[j].startdate.y);
+                        gotoxy(120,i);
+                        printf("%d.%d.%d",a.booklist[j].endate.d, a.booklist[j].endate.m, a.booklist[j].endate.y);
                         i++;
                         gotoxy(60,i);
                         }
