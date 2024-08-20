@@ -13,7 +13,7 @@ date addWeeksToDate(date d, int weeks);
 void updateSTD(student etu);
 void verifybooks(student etu) ;
 int ended(student etu);
-
+student StdPro(pswrd acc);
 
 
 
@@ -192,4 +192,22 @@ void verifybooks(student etu){
     }
 
 }
+}
+
+student StdPro(pswrd acc){
+    student etu,temp ;
+    int flg=0 ;
+    FILE *fp=fopen("DataSTD.bin","rb");
+    if(fp==NULL){
+        printf("Error opening file\n");
+        exit(0);
+    }
+    while(flg==0 && fread(&etu,sizeof(student),1,fp)==1){
+        if(strcmp(acc.usrname,etu.acccount.usrname)==0 && strcmp(acc.password,etu.acccount.password)==0){
+            flg=1 ;
+            temp=etu ;
+        }
+    }
+fclose(fp);
+return temp ;
 }
