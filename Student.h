@@ -168,6 +168,7 @@ return 1 ;
 void verifybooks(student etu){
      date Today =getCurrentDate() ;
      int choix;
+    int flg = 0;
     int i;
     for(i=0;i<10;i++){
         if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y){
@@ -189,9 +190,12 @@ void verifybooks(student etu){
                 }
             }
             updateSTD(etu);
+            flg = 1;
     }
+    }
+    if ( flg == 0 )
+    printf("The due date for none of your books has passed\n");
 
-}
 }
 
 student StdPro(pswrd acc){
