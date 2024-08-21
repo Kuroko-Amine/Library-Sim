@@ -7,7 +7,7 @@
 
 void creatAccountSTD();
 void creatAccountAD();
-int LoginSTD();
+pswrd LoginSTD();
 int ExistSTD(pswrd x);
 int LoginAD();
 int ExistAD(pswrd x);
@@ -21,9 +21,9 @@ pswrd x ;
 int i=0;
  while(1){
     printf("enter your username \n");
-    gets(x.usrname);
+    scanf(" %[^\n]s",x.usrname);
     printf("enter your password \n");
-    gets(x.password);
+    scanf(" %[^\n]s",x.password);
     if(ExistSTD(x)==1){
         printf("login successful \n");
         return x ;
@@ -66,7 +66,7 @@ int i=0;
                         return x ;
         }}
     printf("enter your password \n");
-    gets(x.password);
+    scanf(" %[^\n]s",x.password);
     if(ExistSTD(x)==1){
         printf("login successful \n");
         return x ;
@@ -101,7 +101,7 @@ return -1 ;
 
 int ExistAD(pswrd x){
     pswrd y ;
-    FILE *ptr=fopen("C:\\Users\\Aminos\\Desktop\\lib\\DataAD.bin","rb");
+    FILE *ptr=fopen("DataAD.bin","rb");
     if(ptr==NULL){
         printf("error opening data file \n");
         exit(1);
@@ -126,12 +126,12 @@ pswrd x ;
 int i=0;
  while(1){
     printf("enter your username \n");
-    gets(x.usrname);
+    scanf(" %[^\n]s",x.usrname);
     printf("enter your password \n");
-    gets(x.password);
+    scanf(" %[^\n]s",x.password);
     if(ExistAD(x)==1){
         printf("login successful \n");
-        return x ;
+        return 1;
     }else if(ExistAD(x)==-1){
         printf("your account dosent exist\n");
         printf("Do u want to creat one ? \n");
@@ -145,11 +145,10 @@ int i=0;
             }while(choice<1 || choice >2);
         if(choice ==1){
             creatAccountAD();
-            return x ;
+            return 1 ;
         }else{
             printf("thank you for using our service \n");
-            strcpy(x.usrname, "None");
-            return x ;
+            return -1 ;
         }
     }else{
 
@@ -167,14 +166,13 @@ int i=0;
                     }
                     }while(choice<1 || choice >2);
                     if(choice ==1){
-                        strcpy(x.usrname, "None");
-                        return x ;
+                        return -1 ;
         }}
     printf("enter your password \n");
-    gets(x.password);
+    scanf(" %[^\n]s",x.password);
     if(ExistAD(x)==1){
         printf("login successful \n");
-        return x ;
+        return 1 ;
     }
  }
 }
@@ -197,7 +195,7 @@ void creatAccountSTD(){
     do{
         flog=0 ;
     printf("enter your account username \n");
-    gets(y.acccount.usrname);
+    scanf(" %[^\n]s",y.acccount.usrname);
    while(fread(&x,sizeof(student),1,ptr)==1){
     if(strcmp(y.acccount.usrname,x.acccount.usrname)==0 ){
         flog=1 ;
@@ -217,9 +215,9 @@ void creatAccountSTD(){
     }
     do{
     printf("enter your account password \n");
-    gets(y.acccount.password);
+    scanf(" %[^\n]s",y.acccount.password);
     printf("re enter your account password\n");
-    gets(temp);
+    scanf(" %[^\n]s",temp);
     if(strcmp(temp,y.acccount.password)==0){
         flg=1 ;
     }else{
@@ -230,14 +228,14 @@ void creatAccountSTD(){
     system("cls");
     }while(flg==0);
     printf("enter your first name \n");
-    gets(y.profile.fname);
+    scanf(" %[^\n]s",y.profile.fname);
     printf("enter your last name \n");
-    gets(y.profile.lname);
+    scanf(" %[^\n]s",y.profile.lname);
     printf("enter your ID \n");
     scanf("%d",&y.profile.ID);
     getchar();
     printf("enter your faculty \n");
-    gets(y.profile.faculty);
+    scanf(" %[^\n]s",y.profile.faculty);
     y.pret=0 ;
     int k ;
     for(k=0 ; k<10 ; k++){
@@ -268,19 +266,19 @@ void creatAccountAD(){
     int flog=0 ;
     FILE *ptr=fopen("DataAD.bin","rb");
     if(ptr==NULL){
-        printf("error opening file DAta STD\n");
+        printf("error opening file DAta AD\n");
         exit(1);
     }
     do{
         flog=0 ;
     printf("enter your account username \n");
-    gets(y.usrname);
+    scanf(" %[^\n]s",y.usrname);
    while(fread(&x,sizeof(student),1,ptr)==1){
     if(strcmp(y.usrname,x.usrname)==0){
         flog=1 ;
         printf("username Already Exsist");
    }
-    if(strcmp(y.acccount.usrname,"None")==0){
+    if(strcmp(y.usrname,"None")==0){
         flog=1 ;
         printf("U can't use this username ! \n");
    }
@@ -289,14 +287,14 @@ void creatAccountAD(){
     fclose(ptr);
     ptr=fopen("DataAD.bin","ab");
     if(ptr==NULL){
-        printf("error opening file DAta STD\n");
+        printf("error opening file DAta AD\n");
         exit(1);
     }
         do{
                 printf("enter your account password \n");
-                gets(y.password);
+                scanf(" %[^\n]s",y.password);
                 printf("re enter your account password\n");
-                gets(temp);
+                scanf(" %[^\n]s",temp);
             if(strcmp(temp,y.password)==0){
                     flg=1 ;
                 }else{
