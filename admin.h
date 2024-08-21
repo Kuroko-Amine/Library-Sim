@@ -45,7 +45,7 @@ void update ( int bookid ){
                 scanf("%d",&a.quant);
                 break;
                 case 2:
-                printf("Enter the new price: ");
+                printf("Enter the new price:");
                 scanf("%f",&a.price);
                 break;
                 default:
@@ -77,15 +77,18 @@ void update ( int bookid ){
         }
     }
 }
-void search ( int bookid ){
+void search(){
     FILE *f = fopen("booksInfo", "rb");
     book a; int choice = 0,found = 0;
     if (f == NULL) {
         printf("Error opening file!\n");
         exit(1);
     }else{
+        int bookid;
+        printf("Input the ID of the book you're looking for\n");
+        scanf("%d",&bookid);
         while( fread( &a, sizeof(book), 1, f) == 1 ){
-            if ( a.bookID == bookid) {
+            if ( a.bookID == bookid ) {
                 found = 1;
                 printf(" 1) Update the book's informations\n 2) Delete the book from the library\n");
                 scanf("%d", &choice);
@@ -186,7 +189,7 @@ void Addabook(){
 }
 
 void DisplayAllAccounts(){
-    FILE *f = fopen("adminAccounts", "rb");
+    FILE *f = fopen("DataAD.bin", "rb");
     pswrd a;int i = 2;
     if (f == NULL) {
         printf("Error opening file!\n");
@@ -217,7 +220,7 @@ void ModifyAcc(){
     printf("Enter your username\n");
     scanf(" %[^\n]s",a.usrname);
 
-    FILE *f = fopen("adminAccounts","rb"), *new = fopen("new","wb");
+    FILE *f = fopen("DataAD.bin","rb"), *new = fopen("new","wb");
 
     if (f== NULL) {
         printf("Error opening file!\n");
@@ -269,14 +272,14 @@ void ModifyAcc(){
             printf("The username you have entered doesn't exist.\n");
 
             fclose(f);fclose(new);
-            remove("adminAccounts");
-            rename("new","adminAccounts");
+            remove("DataAD.bin");
+            rename("new","DataAD.bin");
 }}
 
 void deleteAcc( char username[45] ){
     pswrd a;char choix;
     int found = 0;
-    FILE *f = fopen("AdminAccounts","rb");
+    FILE *f = fopen("DataAD.bin","rb");
     FILE *temp = fopen("temp","wb");
     if ( f == NULL ){
         printf("Error opening file!\n");
@@ -302,8 +305,8 @@ void deleteAcc( char username[45] ){
         }
     }fclose(f);fclose(temp);
     if ( found ){
-        remove("AdminAccounts");
-        rename("temp","AdminAccounts");
+        remove("DataAD.bin");
+        rename("temp","DataAD.bin");
     }else{
         printf("The account you have entered doesn't exist.\n");
         remove("temp");
@@ -313,7 +316,7 @@ void deleteAcc( char username[45] ){
 void displayStudents(){
     student s;
     int i = 2;
-    FILE *f = fopen("Students","rb");
+    FILE *f = fopen("DataSTD.bin","rb");
     if ( f == NULL ){
         printf("Error opening file!\n");
         exit(1);
@@ -367,7 +370,7 @@ void borrowedBooks(){
             printf("Due Date");
             gotoxy(0,1);
             printf("-------------------------------------------------------------------------------------------------------------------------------------------");
-            FILE *f = fopen("Students","rb");
+            FILE *f = fopen("DataSTD.bin","rb");
             if ( f == NULL ){
                 printf("Error opening file!\n");
                 exit(1);
@@ -398,7 +401,7 @@ void borrowedBooks(){
         int id , found = 0;
         printf("Enter the student's ID\n");
         scanf("%d",&id);
-        FILE *f = fopen("Students","rb");
+        FILE *f = fopen("DataSTD.bin","rb");
             if ( f == NULL ){
                 printf("Error opening file!\n");
                 exit(1);
