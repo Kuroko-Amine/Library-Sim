@@ -171,7 +171,7 @@ void verifybooks(student etu){
     int flg = 0;
     int i;
     for(i=0;i<10;i++){
-        if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y){
+if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y&&strcmp(etu.booklist[i].title,"Empty")!=0&&strcmp(etu.booklist[i].author,"Empty")!=0){
             printf("The due date for the book %s has passed !\n",etu.booklist[i].title);
             printf("Do you want to :\n 1)return the book\n2)extend the due date by 3 weeks\n");
             do{
