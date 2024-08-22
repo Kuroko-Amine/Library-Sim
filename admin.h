@@ -150,7 +150,7 @@ void Displaybooks(){
     fclose(f);
 }
 void Addabook(){
-    book a,b;
+    book a,b; int exist = 0;
     FILE *f = fopen("booksInfo","rb");
     printf("Enter the book ID\n");
     scanf("%d",&a.bookID);
@@ -161,14 +161,19 @@ void Addabook(){
         while( fread( &b, sizeof(book), 1, f) == 1 ){
             if (a.bookID == b.bookID){
                 printf("This ID is already taken!\n");
+                exist = 1;
                 fclose(f);
-                exit(1);
             }
     }fclose(f);
-    printf("Enter the book's title\n");
-    scanf(" %[^\n]s",a.title);
-    printf("Enter the book's author\n");
-    scanf(" %[^\n]s",a.author);
+    if ( !exist ){
+    do{
+        printf("Enter the book's title\n");
+        scanf(" %[^\n]s",a.title);
+        printf("Enter the book's author\n");
+        scanf(" %[^\n]s",a.author);
+        if ( strcmp(a.title,"Plqvmtx")==0 && strcmp(a.author,"Plqvmtx")==0 )
+        printf("The book's title and the author's name can't be 'Plqvmtx' \n\nTry again\n");
+    }while( strcmp(a.title,"Plqvmtx")==0 && strcmp(a.author,"Plqvmtx")==0 );
     printf("Enter the book's genre\n");
     scanf(" %[^\n]s",a.genre);
     printf("Enter the book's price\n");
@@ -185,6 +190,7 @@ void Addabook(){
             fwrite( &a, sizeof(book), 1, f);
             fclose(f);
         }
+    }
     }
 }
 
