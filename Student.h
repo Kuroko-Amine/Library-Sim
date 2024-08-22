@@ -120,13 +120,38 @@ void searchLiv(char name[30],student etu){
                 }
             }while(choice<1 || choice > 2);
             if(choice==1){
-                printf("Title: %s\n",x.title);
-                printf("Author: %s\n",x.author);
-                printf("Genre : %s\n",x.genre);
-                printf("prix : %.2f\n",x.price);
-                printf("ID : %d\n",x.bookID);
-                printf("quantity : %d\n",x.quant);
-                printf("Year : %d\n",x.year);
+                system("cls");
+                gotoxy(0, 0);
+                printf("ID");
+                gotoxy(20, 0);
+                printf("Title");
+                gotoxy(50, 0);
+                printf("Author");
+                gotoxy(80, 0);
+                printf("Genre");
+                gotoxy(105, 0);
+                printf("Publishing year");
+                gotoxy(130,0);
+                printf("Quantity");
+                gotoxy(150,0);
+                printf("Price");
+                gotoxy(0,1);
+                printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                gotoxy(0, 2);
+                printf("%d",x.bookID);
+                gotoxy(20, 2);
+                printf("%s",x.title);
+                gotoxy(50, 2);
+                printf("%s",x.author);
+                gotoxy(80, 2);
+                printf("%s",x.genre);
+                gotoxy(105, 2);
+                printf("%d",x.year);
+                gotoxy(135,2);
+                printf("%d",x.quant);
+                gotoxy(155,2);
+                printf("%.2f DA",x.price);
+                gotoxy(0,1);
         }else{
             if(etu.pret>10){
                 printf("Sorry you have already borrowed 10 books\n");
