@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -247,8 +248,8 @@ void creatAccountSTD(){
         y.booklist[k].endate.y=0000;
         y.booklist[k].endate.m=00;
         y.booklist[k].stdID=0000;
-        strcpy(y.booklist[k].title,"Empty");
-        strcpy(y.booklist[k].author,"Empty");
+        strcpy(y.booklist[k].title,"Plqvmtx");
+        strcpy(y.booklist[k].author,"Plqvmtx");
     }
     printf("Account created Succefuly ! \n");
     fwrite(&y,sizeof(student),1,ptr);
