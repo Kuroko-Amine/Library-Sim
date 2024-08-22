@@ -3,9 +3,6 @@
 #include <string.h>
 #include "utility.h"
 #include <windows.h>
-
-
-
 void gotoxy(int x, int y) {
     COORD coord;
     coord.X = x;
@@ -129,10 +126,14 @@ void Displaybooks(){
         printf("Author");
         gotoxy(80, 0);
         printf("Genre");
-        gotoxy(110, 0);
+        gotoxy(105, 0);
+        printf("Publishing year");
+        gotoxy(135,0);
+        printf("Quantity");
+        gotoxy(155,0);
         printf("Price");
         gotoxy(0, 1);
-        printf("-------------------------------------------------------------------------------------------------------------------------");
+        printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
         while( fread( &a, sizeof(book), 1, f) == 1 ){
             gotoxy(0, i+1);
             printf("%d", a.bookID);
@@ -142,7 +143,11 @@ void Displaybooks(){
             printf("%s",a.author);
             gotoxy(80, i+1);
             printf("%s",a.genre);
-            gotoxy(110, i+1);
+            gotoxy(105, i+1);
+            printf("%d",a.year);
+            gotoxy(135,i+1);
+            printf("%d",a.quant);
+            gotoxy(155,i+1);
             printf("%.2f DA",a.price);
             i++;
         }
