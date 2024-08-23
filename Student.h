@@ -14,6 +14,7 @@ void updateSTD(student etu);
 void verifybooks(student etu) ;
 int ended(student etu);
 student StdPro(pswrd acc);
+void Updatebk(stubook bk);
 
 
 
@@ -120,13 +121,45 @@ void searchLiv(char name[30],student etu){
                 }
             }while(choice<1 || choice > 2);
             if(choice==1){
-                printf("Title: %s\n",x.title);
-                printf("Author: %s\n",x.author);
-                printf("Genre : %s\n",x.genre);
-                printf("prix : %.2f\n",x.price);
-                printf("ID : %d\n",x.bookID);
-                printf("quantity : %d\n",x.quant);
-                printf("Year : %d\n",x.year);
+                system("cls");
+                gotoxy(0, 0);
+                printf("ID");
+                gotoxy(20, 0);
+                printf("Title");
+                gotoxy(50, 0);
+                printf("Author");
+                gotoxy(80, 0);
+                printf("Genre");
+                gotoxy(105, 0);
+                printf("Publishing year");
+                gotoxy(130,0);
+                printf("Quantity");
+                gotoxy(150,0);
+                printf("Price");
+                gotoxy(0,1);
+                printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                gotoxy(0, 2);
+                printf("%d",x.bookID);
+                gotoxy(20, 2);
+                printf("%s",x.title);
+                gotoxy(50, 2);
+                printf("%s",x.author);
+                gotoxy(80, 2);
+                printf("%s",x.genre);
+                gotoxy(105, 2);
+                printf("%d",x.year);
+                gotoxy(135,2);
+                printf("%d",x.quant);
+                gotoxy(155,2);
+                printf("%.2f DA",x.price);
+                gotoxy(0,1);
+                
+                
+                
+                
+                
+                
+                
         }else{
             if(etu.pret>10){
                 printf("Sorry you have already borrowed 10 books\n");
@@ -143,6 +176,9 @@ void searchLiv(char name[30],student etu){
                     etu.booklist[etu.pret].endate=addWeeksToDate(getCurrentDate(),3);
                     etu.pret=etu.pret+1 ;
                     updateSTD(etu);
+                    Updatebok(x);
+
+                    
             }else{
                 printf("Sorry this book is not available\n");
             }
@@ -157,8 +193,17 @@ int ended(student etu){
     int i;
     date Today =getCurrentDate() ;
     for(i=0;i<10;i++){
-     if(Today.y>etu.booklist[i].endate.y||Today.d>etu.booklist[i].endate.d && Today.m==etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y||Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y){
+     if(Today.y>etu.booklist[i].endate.y && strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklist[i].author,"Plqvmtx")!=0){
             return 0;
+    }else{
+        if(Today.m>etu.booklist[i].endate.m && Today.y==etu.booklist[i].endate.y && strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklist[i].author,"Plqvmtx")!=0)
+        {
+            return 0 ;
+        }else{
+if(Today.d>etu.booklist[i].endate.d&&Today.m==etu.booklist[i].endate.m&&Today.y==etu.booklist[i].endate.y&&strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklist[i].author,"Plqvmtx")!=0 ){
+                return 0 ;
+            }
+        }
     }
 }
 return 1 ;
@@ -166,12 +211,11 @@ return 1 ;
 
 
 void verifybooks(student etu){
-     date Today =getCurrentDate() ;
      int choix;
     int flg = 0;
     int i;
     for(i=0;i<10;i++){
-if(ended(etu)==0&&strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklist[i].author,"Plqvmtx")!=0){
+if(ended(etu)==0){
             printf("The due date for the book %s has passed !\n",etu.booklist[i].title);
             printf("Do you want to :\n 1)return the book\n2)extend the due date by 3 weeks\n");
             do{
@@ -187,6 +231,7 @@ if(ended(etu)==0&&strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklis
                 Updatebk(etu.booklist[i]);
                 for(int k=i ; k<10;k++){
                     etu.booklist[k]=etu.booklist[k+1];
+                    
                 }
                 etu.pret-- ;
             }
@@ -198,6 +243,8 @@ if(ended(etu)==0&&strcmp(etu.booklist[i].title,"Plqvmtx")!=0&&strcmp(etu.booklis
     printf("The due date for none of your books has passed\n");
 
 }
+
+
 
 void Updatebk(stubook bk){
     book x ;
@@ -226,7 +273,25 @@ void Updatebk(stubook bk){
     rename("temp.bin","booksInfo");
 }
 
-
+void Updatebok(book bk){
+    book x ;
+    int flg=0;
+    FILE *f=fopen("booksInfo","rb");
+    if(f==NULL){
+        printf("error opening file\n");
+    }
+    FILE *fp=fopen("temp.bin","wb");
+    if(fp==NULL){
+        printf("error opening file\n");
+    }
+    while(fread(&x,sizeof(book),1,f)==0){
+        fwrite(&x,sizeof(book),1,fp);
+    }
+    fclose(f);
+    fclose(fp);
+    remove("booksInfo");
+    rename("temp.bin","booksInfo");
+}
 
 
 student StdPro(pswrd acc){
