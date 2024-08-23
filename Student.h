@@ -332,7 +332,7 @@ void returnabook(student bk){
     if(f==NULL){
         printf("error opening file\n");
     }
-    while(fread(&x,sizeof(book),&,f)==1){
+    while(fread(&x,sizeof(book),1,f)==1){
         if(x.bookID==bk.booklist[choix-1].bookID && strcmp(x.title,bk.booklist[choix-1].title)==0 && strcmp(x.author,bk.booklist[choix-1].author)==0){
             x.quant++ ;
         }
