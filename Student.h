@@ -4,7 +4,7 @@
 #include<time.h>
 #include"utility.h"
 
-
+int tab[10];
 void searchLiv(char name[30],student etu);
 date getCurrentDate() ;
 int isLeapYear(int year);
@@ -249,7 +249,6 @@ if(ended(etu)==0){
 
 void Updatebk(stubook bk){
     book x ;
-    int flg=0;
     FILE *f=fopen("booksInfo","rb");
     if(f==NULL){
         printf("error opening file\n");
@@ -258,14 +257,12 @@ void Updatebk(stubook bk){
     if(fp==NULL){
         printf("error opening file\n");
     }
-    while(fread(&x,sizeof(book),1,f)==0){
-        flg=0 ;
+    while(fread(&x,sizeof(book),1,f)==1){
+       
         if(x.bookID==bk.bookID && strcmp(x.title,bk.title)==0 && strcmp(x.title,bk.author)==0){
             x.quant++;
             fwrite(&x,sizeof(book),1,fp);
-            flg=1;
-        }
-        if(flg==0){
+        }else{
         fwrite(&x,sizeof(book),1,fp);}
     }
     fclose(f);
@@ -276,7 +273,6 @@ void Updatebk(stubook bk){
 
 void Updatebok(book bk){
     book x ;
-    int flg=0;
     FILE *f=fopen("booksInfo","rb");
     if(f==NULL){
         printf("error opening file\n");
@@ -285,8 +281,11 @@ void Updatebok(book bk){
     if(fp==NULL){
         printf("error opening file\n");
     }
-    while(fread(&x,sizeof(book),1,f)==0){
-        fwrite(&x,sizeof(book),1,fp);
+    while(fread(&x,sizeof(book),1,f)==1){
+        if(x.bookID==bk.bookID && strcmp(x.author,bk.author)==0 && strcmp(x.title,bk.title)==0){
+            fwrite(&bk,sizeof(book),1,fp);
+        }else{
+        fwrite(&x,sizeof(book),1,fp);}
     }
     fclose(f);
     fclose(fp);
@@ -311,4 +310,40 @@ student StdPro(pswrd acc){
     }
 fclose(fp);
 return temp ;
+}
+
+void returnabook(student bk){
+    if(bk.pret!=0){
+    book x ;
+    int i;
+    printf("choose a book to return\n");
+    for(i=0;i<bk.pret-1;i++){
+        printf("%d)%s\n",i+1,bk.booklist[i].title);
+    }
+    int choix;
+    do{
+        scanf("%d",&choix);
+        if(choix<0 || choix>bk.pret){
+            printf("wrong choice");
+        }
+    }while(choix<0 || choix>bk.pret);
+
+    FILE *f=fopen("booksInfo","rb");
+    if(f==NULL){
+        printf("error opening file\n");
+    }
+    while(fread(&x,sizeof(book),&,f)==1){
+        if(x.bookID==bk.booklist[choix-1].bookID && strcmp(x.title,bk.booklist[choix-1].title)==0 && strcmp(x.author,bk.booklist[choix-1].author)==0){
+            x.quant++ ;
+        }
+    }
+    fclose(f);
+    for(i=choix-1;i<10;i++){
+        bk.booklist[i]=bk.booklist[i+1];
+    }
+    updateSTD(bk);
+    Updatebok(x);
+    }else{
+        printf("you don't have any book borrowed\n");
+    }
 }
