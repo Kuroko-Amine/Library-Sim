@@ -15,6 +15,7 @@ void verifybooks(student etu) ;
 int ended(student etu);
 student StdPro(pswrd acc);
 void Updatebk(stubook bk);
+void Updatebok(book bk);
 
 
 
