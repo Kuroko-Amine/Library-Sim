@@ -4,7 +4,7 @@
 #include<time.h>
 #include"utility.h"
 
-int tab[10];
+
 void searchLiv(char name[30],student etu);
 date getCurrentDate() ;
 int isLeapYear(int year);
