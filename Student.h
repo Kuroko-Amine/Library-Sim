@@ -247,6 +247,16 @@ if(ended(etu)==0){
                     etu.booklist[k]=etu.booklist[k+1];
                     
                 }
+                bk.booklist[9].bookID=0000;
+                bk.booklist[9].startdate.d=00;
+                bk.booklist[9].startdate.y=0000;
+                bk.booklist[9].startdate.m=00;
+                bk.booklist[9].endate.d=00;
+                bk.booklist[9].endate.y=0000;
+                bk.booklist[9].endate.m=00;
+                bk.booklist[9].stdID=0000;
+                strcpy(bk.booklist[9].title,"Plqvmtx");
+                strcpy(bk.booklist[9].author,"Plqvmtx");
                 etu.pret-- ;
             }
             updateSTD(etu);
