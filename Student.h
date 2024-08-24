@@ -67,30 +67,50 @@ date addWeeksToDate(date d, int weeks) {
 }
 
 
-void updateSTD(student etu){
-   FILE *op=fopen("DataSTD.bin","rb");
-    if(op==NULL){
+void updateSTD(student etu) {
+    FILE *op = fopen("DataSTD.bin", "rb");
+    if (op == NULL) {
+        printf("Error opening file DataSTD.bin\n");
+        return;
+    }
+
+    FILE *temp = fopen("temp.bin", "wb");
+    if (temp == NULL) {
+        printf("Error opening file temp.bin\n");
+        fclose(op);
+        return;
+    }
+
+    student x;
+    while (fread(&x, sizeof(student), 1, op) == 1) {
+        if (x.profile.ID != etu.profile.ID) {
+            fwrite(&x, sizeof(student), 1, temp);
+        } else {
+            fwrite(&etu, sizeof(student), 1, temp);
+        }
+    }
+
+    fclose(op);fclose(temp);
+    temp = fopen("temp.bin", "rb");
+    op = fopen("DataSTD.bin", "wb");
+    if ( temp == NULL ){
         printf("Error opening file\n");
-        return ;
+        exit(1);
     }
-    FILE *temp=fopen("temp.bin","wb");
-    if(temp==NULL){
-        printf("Error opening file\n");
-        return ;
+    while(fread(&x,sizeof(student),1,temp)==1){
+        fwrite(&x,sizeof(student),1,op);
+    }fclose(temp);fclose(op);
+
+    if (remove("temp.bin") != 0) {
+        printf("Error deleting original file\n");
     }
-    student x ;
-    while(fread(&x,sizeof(student),1,op)==1){
-        if(x.profile.ID!=etu.profile.ID){
-        fwrite(&x,sizeof(student),1,temp);
-     }else{
-        fwrite(&etu,sizeof(student),1,temp);
-     }
-    }
-    fclose(temp);
-    fclose(op);
-    remove("DataSTD.bin");
-    rename("temp.bin","DataSTD.bin");
+
+    /*if (rename("temp.bin", "DataSTD.bin") != 0) {
+        printf("Error renaming temp file\n");
+    }*/
+    
 }
+
     
 
 void searchLiv(char name[30],student etu){
@@ -113,7 +133,7 @@ void searchLiv(char name[30],student etu){
             printf("Sorry Book not found\n");
         }else{
             printf("Book found \n");
-            printf("1)Display Info about the book \n2)Would you like to borrow the book?");
+            printf("1)Display Info about the book \n2)Would you like to borrow the book?\n");
             int choice ;
             do{
                 scanf("%d",&choice);
@@ -155,12 +175,6 @@ void searchLiv(char name[30],student etu){
                 printf("%.2f DA",x.price);
                 gotoxy(0,1);
                 
-                
-                
-                
-                
-                
-                
         }else{
             if(etu.pret>10){
                 printf("Sorry you have already borrowed 10 books\n");
@@ -175,15 +189,14 @@ void searchLiv(char name[30],student etu){
                     etu.booklist[etu.pret].stdID=etu.profile.ID;
                     strcpy(etu.booklist[etu.pret].title,x.title);
                     etu.booklist[etu.pret].endate=addWeeksToDate(getCurrentDate(),3);
-                    etu.pret=etu.pret+1 ;
+                    etu.pret=etu.pret+1;
                     updateSTD(etu);
                     Updatebok(x);
-
-                    
             }else{
                 printf("Sorry this book is not available\n");
             }
             }else{printf("You need to return one of your books; you have exceeded the due date u can't borrow a book\n");
+            printf("%d\n",ended(etu));
             }
             }
         }
@@ -218,7 +231,7 @@ void verifybooks(student etu){
     for(i=0;i<10;i++){
 if(ended(etu)==0){
             printf("The due date for the book %s has passed !\n",etu.booklist[i].title);
-            printf("Do you want to :\n 1)return the book\n2)extend the due date by 3 weeks\n");
+            printf("Do you want to :\n1) Return the book\n2) Extend the due date by 3 weeks\n");
             do{
                 scanf("%d",&choix);
                 if(choix<1 || choix>2){
@@ -307,8 +320,7 @@ student StdPro(pswrd acc){
             flg=1 ;
             temp=etu ;
         }
-    }
-fclose(fp);
+    }fclose(fp);
 return temp ;
 }
 
@@ -317,8 +329,8 @@ void returnabook(student bk){
     book x ;
     int i;
     printf("choose a book to return\n");
-    for(i=0;i<bk.pret-1;i++){
-        printf("%d)%s\n",i+1,bk.booklist[i].title);
+    for(i=0;i<=bk.pret-1;i++){
+        printf("%d) %s\n",i+1,bk.booklist[i].title);
     }
     int choix;
     do{
@@ -338,9 +350,21 @@ void returnabook(student bk){
         }
     }
     fclose(f);
+    
     for(i=choix-1;i<10;i++){
         bk.booklist[i]=bk.booklist[i+1];
     }
+    bk.booklist[9].bookID=0000;
+    bk.booklist[9].startdate.d=00;
+    bk.booklist[9].startdate.y=0000;
+    bk.booklist[9].startdate.m=00;
+    bk.booklist[9].endate.d=00;
+    bk.booklist[9].endate.y=0000;
+    bk.booklist[9].endate.m=00;
+    bk.booklist[9].stdID=0000;
+    strcpy(bk.booklist[9].title,"Plqvmtx");
+    strcpy(bk.booklist[9].author,"Plqvmtx");
+    bk.pret--;
     updateSTD(bk);
     Updatebok(x);
     }else{
